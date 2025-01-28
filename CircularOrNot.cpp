@@ -53,27 +53,19 @@ public:
         } while (tail != temp);
         cout << endl;
     }
-    // DELETE
-    void deleteNode(Node *&tail, int value)
-    {
-        if(tail == NULL){
-            cout<<"List is empty and nothing is here to delete\n"<<endl;
-            return;
-        }else{
-            Node* prev = tail;
-            Node* curr = prev->next;
-
-            while(curr->data != value){
-                prev = curr;
-                curr = curr->next;
-            }
-            prev->next = curr->next;
-            if(tail == curr){
-                tail = prev;
-            }
-            curr->next = NULL;
-            delete curr;
+    // Checking  if it is circular or Not
+    bool isCircular(Node* head){
+        if(head == NULL){
+            return true;
         }
+        Node *temp = head->next;
+        while(temp != NULL && temp != head){
+            temp=temp->next;
+        }
+        if(temp == head){
+            return true;
+        }
+          return false;
     }
 };
 
@@ -83,17 +75,15 @@ int main()
     CircularList list;
     Node *tail = NULL;
     list.insertNode(tail, 5, 3);
-    list.printList(tail);
     list.insertNode(tail, 3, 5);
-    list.printList(tail);
     list.insertNode(tail, 5, 10);
-    list.printList(tail);
     list.insertNode(tail, 10, 30);
-    list.printList(tail);
     list.insertNode(tail, 5, 69);
     list.printList(tail);
-    cout<<"After deleting node: "<<endl;
-    list.deleteNode(tail, 69);
-    list.printList(tail);
-
+    bool decision =list.isCircular(tail);
+    if(decision){
+        cout<<"List is Circular!!";
+    }else{
+        cout<<"List is Not Circular!!";
+    }
 }
