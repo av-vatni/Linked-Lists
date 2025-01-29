@@ -1,4 +1,5 @@
 #include <iostream>
+#include<map>
 using namespace std;
 
 class Node
@@ -67,6 +68,22 @@ public:
         }
           return false;
     }
+    // Loop detection
+    bool detectLoop(Node* head){
+        Node* temp = head;
+        if(head == NULL){
+            return false;
+        }
+        map<Node*, bool>visited;
+        while (temp->next == NULL){
+            if(visited[temp] == true){
+                return false;
+            }
+            visited[temp] = true;
+            temp = temp->next;
+        }
+        return false;
+    }
 };
 
 int main()
@@ -85,5 +102,11 @@ int main()
         cout<<"List is Circular!!";
     }else{
         cout<<"List is Not Circular!!";
+    }
+    bool detected = list.detectLoop(tail);
+    if(detected){
+        cout<<"Loop is there!!"<<endl;
+    }else{
+        cout<<"Loop is not there!!";
     }
 }
